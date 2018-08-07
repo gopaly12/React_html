@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+     class CalculateTemp extends React.Component{
+     constructor(){
+	     super()
+	     this.state={temp : 0}
+	     this.tempchange  =this.tempchange.bind(this)
+	 }
+	 tempchange(e){
+	 	this.setState({
+	 		temp: e.target.value
+	 	})
+	}
+     	render(){
+	     	return (
+	     		<div>
+	     			<h3> calc the temp with child Comp</h3>
+	     			<TemperatureInput scale="c" />
+					<TemperatureInput scale="f" />
+	     		</div>
+	     	)
+	 	}
+	 }
+	 const scaleNames = {
+	  c: 'Celsius',
+	  f: 'Fahrenheit'
+	};
+
+	 class TemperatureInput extends React.Component{
+		constructor(props){
+			super(props)
+			this.state ={
+				temperature:0
+			}
+			this.handleChange = this.handleChange.bind(this)
+			this.incbtn = this.incbtn.bind(this)
+			this.decbtn = this.decbtn.bind(this)
+
+		}
+		incbtn(){
+			const temp = this.state.temperature;
+			this.setState({
+				temperature :  parseInt(temp) + 1
+		})
+		}		
+		decbtn(){
+			const temp = this.state.temperature;
+
+			this.setState({
+				temperature : parseInt(temp) - 1
+		})
+		}
+		handleChange(e){
+			this.setState({
+				temperature : e.target.value
+			})
+		}
+	 	render(){
+		    const scale = this.props.scale;
+		    const temperature = this.state.temperature;
+			return (
+	 			<fieldset>
+			        <legend>Enter temperature in {scaleNames[scale]}:</legend>
+			        <button mytemp={temperature} onClick={this.incbtn}>+</button>
+			        <input value={temperature} onChange={this.handleChange}/> 
+			        <button mytemp={temperature} onClick={this.decbtn}>-</button>
+			        <br />Temp is <b>{temperature} </b>
+			        <br/>
+			        {temperature == 0 ? '' : <WaterState chktemp = {temperature} />}
+			        
+		      	</fieldset>
+	 		)
+	 	}
+	}
+	function WaterState(props){
+		let res ='';
+		if(props.chktemp >100){
+			res = "Waper satate"
+		}else{
+			res = "Liquied satate"
+		}
+
+		return <div> Water state is <b> {res}</b></div>
+	}
+	ReactDOM.render(<CalculateTemp />,document.getElementById('root'))
+</script>
+</body>
+
+</html>
+

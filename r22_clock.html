@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+   
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    <style>
+        .wrapper{
+            width: 300px;
+            border: 1px solid red;
+            padding: 20px;
+            
+        }
+        .Chat{
+            width: 100%;
+            background: #ccffcc;
+            min-height: 300px;
+        } 
+        .Label{
+
+            width: 30%;float: left;
+        }
+        .Input{
+
+            width: 65%;float: left;
+        }
+    </style>
+    <div id="root"></div>
+    <script type="text/babel">
+       class Clock extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = this.getTime();
+  }
+
+  componentDidMount() {
+    this.setTimer();
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  setTimer() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(this.updateClock.bind(this), 1000);
+  }
+
+  updateClock() {
+    this.setState(this.getTime, this.setTimer);
+  }
+
+  getTime() {
+    const currentTime = new Date();
+    return {
+      hours: currentTime.getHours(),
+      minutes: currentTime.getMinutes(),
+      seconds: currentTime.getSeconds(),
+      ampm: currentTime.getHours() >= 12 ? 'pm' : 'am'
+    }
+  }
+
+  render() {
+    const {hours, minutes, seconds, ampm} = this.state;
+    return (
+      <div className="clock">
+        {
+          hours === 0 ? 12 :
+            (hours > 12) ?
+              hours - 12 : hours
+        }:{
+          minutes > 9 ? minutes : `0${minutes}`
+        }:{
+          seconds > 9 ? seconds : `0${seconds}`
+        } {ampm}
+      </div>
+    )
+  }
+}
+
+        ReactDOM.render(<Clock />,document.getElementById('root'))
+
+</script>
+</body>
+</html>

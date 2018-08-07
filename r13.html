@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+    	
+    	class Stddata extends React.Component{
+            constructor(props){
+            super(props)
+            this.state={stds : ['std1','std2','std3']}
+             
+        }
+        addItem(e){
+        e.preventDefault()
+        alert("addbtn")
+        const {stds} = this.state
+        const newstd = 'std44new'
+        this.setState({stds:[...this.state.stds,newstd]})
+    }
+    	   render(){
+           const {Id ,Roll} = this.state
+           return(
+            <Greet name='sub' age="12" sex="femake" id={Id} rollno={Roll} stds ={this.state.stds}/>
+           )
+        }	 
+        }
+         
+        function Greet(props){
+            const {name , age ,sex,id,rollno,stds} = props
+            return(
+                <div> 
+                       <form onSubmit={(e) => {this.addItem(e)}}>
+                              <input /><button type="button" > Add</button>
+                        </form>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sno</th>
+                                    <th>Name</th>
+                                    <th>Acion</th>
+                                </tr>
+                            </thead>
+
+
+                        <tbody>
+                             {
+                                stds.map((std,i) => <tr key={i}>
+                                                        <td>{i}</td>
+                                                        <td>{std}</td>
+                                                        <td><button>close</button></td>
+                                                    </tr>
+                                        )
+
+                            }
+                            
+                        </tbody>
+                        </table>
+                     
+
+                </div>
+            )   
+        }
+        
+    	ReactDOM.render(<Stddata />,document.getElementById('root'))
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <style type="text/css">
+    	.personWrap{
+    		width: 30%;float: left;border: 2px solid red;padding: 10px;margin: 5px;
+            text-align: center;;
+    	}
+        .norecordWrap{
+            width: 100%;clear: both;border: 2px solid red;padding: 10px;margin: 5px;
+            text-align: center;;
+        }
+    </style>
+ </head>
+<body>
+	<div id="root"></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        	function Person(props){
+                return (
+                    <div className="personWrap">
+                          <div >
+                             name is <b> {props.name} </b><br />
+                             age is <b> {props.age}  </b>
+                             <button onClick={props.onClick}> Delete</button>
+                          </div>   
+
+
+                    </div> 
+                )
+            }
+            class App extends React.Component{
+                state ={
+                    persons :[
+                        {name:'aa',age:1},
+                        {name:'bb',age:1},                        
+                        {name:'cc',age:1},                        {name:'ddb',age:1},                        
+                        {name:'ee',age:1},
+                    ],
+                    showperson:true,
+                    addperson:false
+                }
+                showhidepersonbtn = () => {
+                    const doesshow= this.state.showperson
+                    this.setState({
+                        showperson:!doesshow
+                    })
+                }
+                deleteperson = (personindex) => {
+                console.log("dlete")
+                 const persons = this.state.persons;
+                 persons.splice(personindex,1)
+                 this.setState({
+                    persons:persons
+                })
+                
+            }
+            addItembtn =  () => {
+
+                 const doesshow= this.state.addperson
+                    this.setState({
+                        addperson:!doesshow
+                    })
+            } 
+
+                render(){
+                    return(
+                        <div> 
+                            <button onClick={this.showhidepersonbtn}> Toggle person</button>
+                            <button onClick={this.addItembtn}> Add person</button>
+                             { this.state.addperson ? <div><AddList formstate={this.state.addperson}/></div> : ''} 
+                             { this.state.showperson ?  
+                                
+                                <div>
+                                {this.state.persons.map(
+                                        (person,index) => <Person 
+                                                            onClick={() => this.deleteperson(index)}
+                                                            key={index}
+                                                            name={person.name} 
+                                                            age={person.age}
+                                                        />                                
+                                       
+                                 )}   
+                                   
+
+                                 </div>   
+                                 :
+                                  <div className="norecordWrap" >no recorda </div>
+                             }   
+                        </div>
+                    )
+                }
+            }
+            class AddList extends React.Component{
+            constructor(props){
+                    super(props) 
+            }
+            closeBtn(){
+                alert("clsoe") 
+                const doesshow= this.state.addperson
+                    this.setState({
+                        addperson:!doesshow
+                    })
+            }
+                render(){ 
+                    return (
+                            <div style={redbg}>
+                                 Add Item<br />
+                                 <input placeholder="Enter Name" /><br /> 
+                                 <input  placeholder="Enter Age"/><br/>
+                                 <button  > Save</button>
+                                 <div> status   is :  {this.props.formstate}</div>
+                                 <button  onClick={this.closeBtn}> close</button>
+                             </div>
+                            )
+                }
+            }
+        	ReactDOM.render(<App />,document.getElementById("root"))
+        </script>
+    </body>
+    </html>

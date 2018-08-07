@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+body {
+  padding: 50px 0;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 18px;
+}
+header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+header img {
+  max-width: 120px;
+}
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+.content .table {
+  margin-bottom: 0;
+}
+.content .table td, .content .table th {
+  vertical-align: middle;
+}
+.content .table .mRight {
+  margin-right: 20px;
+}
+.message {
+  text-align: center;
+}
+.message:only-child {
+  margin: 0;
+}
+.btn-sm {
+  margin-right: 8px;
+}
+.form-inline {
+  margin: 10px auto;
+  width: 235px;
+}
+.form-inline .btn-default {
+  margin-left: 5px;
+}
+.credits {
+  text-align: center;
+  padding: 70px;
+  opacity: 0.5;
+  transition: opacity 0.3s linear;
+}
+.credits:hover {
+  opacity: 1;
+}
+.credits a {
+  color: #4b4668;
+}
+/* Simple show/hide */
+.panel .panel-body {
+  display: none;
+}
+.panel.is-expanded .panel-body {
+  display: block;
+}
+/* Simple CSS transition of max-height */
+.panel .panel-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.525, 0.66, 0.495, 1.4);
+}
+.panel.is-expanded .panel-collapse {
+  max-height: 200px;
+}
+/* JS calculated height - the most accurate */
+.panel .panel-heading {
+  cursor: pointer;
+}
+.panel .panel-collapse {
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+.panel .panel-body {
+  border: none !important;
+}
+.panel h2 {
+  margin-top: 5px !important;
+}
+
+	</style>
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <div class="container">
+    <div id="root"></div>
+    </div>
+    <script type="text/babel">
+        class Collapsible extends React.Component {
+
+constructor(props){
+    super(props)
+    this.state = {
+        isExpanded: false
+    }
+}
+
+handleToggle(e){
+    e.preventDefault();
+    this.setState({
+        isExpanded: !this.state.isExpanded,
+        height: this.refs.inner.clientHeight
+    })
+}
+
+render(){
+    const {title, children} = this.props;
+    const {isExpanded, height} = this.state;
+    const currentHeight = isExpanded ? height : 0;
+    return (
+        <div className={`panel ${isExpanded ? 'is-expanded' : ''}`} onClick={(e) => this.handleToggle(e)}>
+            <div className="panel-heading">
+                <h2>{title}</h2>
+            </div>
+            <div className="panel-collapse" style={{height: currentHeight+'px'}}>
+                <div className="panel-body" ref="inner">
+                    {children}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+}
+ 
+
+
+	    
+class App extends React.Component {
+
+constructor(props){
+    super(props);
+    this.state = {
+        isLoading: true,
+        contacts: []
+    }
+}
+
+
+componentWillMount() {
+    localStorage.getItem('contacts') && this.setState({
+        contacts: JSON.parse(localStorage.getItem('contacts')),
+        isLoading: false
+    })
+}
+
+
+componentDidMount(){
+
+    const date = localStorage.getItem('contactsDate');
+    const contactsDate = date && new Date(parseInt(date));
+    const now = new Date();
+
+    const dataAge = Math.round((now - contactsDate) / (1000 * 60)); // in minutes
+    const tooOld = dataAge >= 1;
+
+    if(tooOld){
+        this.fetchData();            
+    } else {
+        console.log(`Using data from localStorage that are ${dataAge} minutes old.`);
+    }
+
+}
+
+fetchData(){
+
+    this.setState({
+        isLoading: true,
+        contacts: []
+    })
+
+    fetch('https://randomuser.me/api/?results=50&nat=us,dk,fr,gb')
+    .then(response => response.json())
+    .then(parsedJSON => console.log(parsedJSON)) 
+    .catch(error => console.log ('parsing failed', error))
+    
+}
+
+componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem('contacts', JSON.stringify(nextState.contacts));
+    localStorage.setItem('contactsDate', Date.now());
+}
+
+
+render() {
+    const {isLoading, contacts} = this.state;
+    return (
+        <div>
+            <header>
+                <img src={image} />
+                <h1>Fetching Data <button className="btn btn-sm btn-danger" onClick={(e) => {
+                    this.fetchData();    
+                }}>Fetch now</button></h1>
+            </header>
+            <div className={`content ${isLoading ? 'is-loading' : ''}`}>
+                <div className="panel-group">
+                    {
+                        !isLoading && contacts.length > 0 ? contacts.map(contact => {
+                            const {username, name, email, location} = contact;
+                            return <Collapsible key={username} title={name}>
+                                <p>{email}<br />{location}</p>
+                            </Collapsible>
+                        }) : null
+                    }
+                </div>
+                <div className="loader">
+                    <div className="icon"></div>
+                </div>
+            </div>
+        </div>
+    );
+}
+}
+    	ReactDOM.render(<App />,document.getElementById('root'))
+    </script>
+</body>
+</html>

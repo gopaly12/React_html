@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  background-color: #FFB693;
+}
+
+.cc_wrapper
+{
+  width: 250px;
+  margin-left: 90px;
+  text-align: center;
+
+}
+.cc_title
+{
+  font-size: 20pt;
+  color: navy;
+}
+
+button {
+  height: 40px;
+  width: 200px;
+  color: white;
+  font-size: 24pt;
+}
+
+.cc_button_bg_mount	{ background-color: Navy;   	color: white;  outline: none; }
+

@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+body {
+  padding: 50px 0;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 18px;
+}
+header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+header img {
+  max-width: 120px;
+}
+.content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+.content .table {
+  margin-bottom: 0;
+}
+.content .table td, .content .table th {
+  vertical-align: middle;
+}
+.content .table .mRight {
+  margin-right: 20px;
+}
+.message {
+  text-align: center;
+}
+.message:only-child {
+  margin: 0;
+}
+.btn-sm {
+  margin-right: 8px;
+}
+.form-inline {
+  margin: 10px auto;
+  width: 235px;
+}
+.form-inline .btn-default {
+  margin-left: 5px;
+}
+.credits {
+  text-align: center;
+  padding: 70px;
+  opacity: 0.5;
+  transition: opacity 0.3s linear;
+}
+.credits:hover {
+  opacity: 1;
+}
+.credits a {
+  color: #4b4668;
+}
+/* Simple show/hide */
+.panel .panel-body {
+  display: none;
+}
+.panel.is-expanded .panel-body {
+  display: block;
+}
+/* Simple CSS transition of max-height */
+.panel .panel-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.525, 0.66, 0.495, 1.4);
+}
+.panel.is-expanded .panel-collapse {
+  max-height: 200px;
+}
+/* JS calculated height - the most accurate */
+.panel .panel-heading {
+  cursor: pointer;
+}
+.panel .panel-collapse {
+  overflow: hidden;
+  transition: height 0.3s ease-out;
+}
+.panel .panel-body {
+  border: none !important;
+}
+.panel h2 {
+  margin-top: 5px !important;
+}
+
+	</style>
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <div class="container">
+    <div id="root"></div>
+    </div>
+    <script type="text/babel">
+    	class Collapse extends React.Component{
+	    	constructor(props){
+				super(props)
+				this.state = {
+					isExpanded: false
+				}
+				this.handleToggle = this.handleToggle.bind(this)
+			}
+			handleToggle(e){
+				e.preventDefault();
+				this.setState({
+					isExpanded: !this.state.isExpanded, 
+				})
+			}
+	    	render(){
+				const {title, children} = this.props;
+        const {isExpanded, height} = this.state;
+        const currentHeight = isExpanded ? height : 0;
+		    	return(
+					<div className={`panel  panel-primary ${isExpanded ? 'is-expanded' : ''}`} onClick={(e) => this.handleToggle(e)}>
+				      <div className="panel-heading">{this.props.title} <b>  status{this.state.isExpanded}</b> </div>
+				      <div className="panel-body">{this.props.children} </div>
+				    </div>
+		    	)
+		    }
+	    }
+
+	    class App extends React.Component{
+			render(){
+
+				return (
+					<div>
+						<Collapse title='Java'>desccripition about java</Collapse>
+						<Collapse title='PHP'>desccripition aboutPHP</Collapse>
+						<Collapse title='UI Techn'>desccripition UI Techn java</Collapse>
+					</div>
+				)
+			}
+		}
+    	ReactDOM.render(<App />,document.getElementById('root'))
+    </script>
+</body>
+</html>

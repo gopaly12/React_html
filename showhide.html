@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <style type="text/css">
+    .margin10{
+        margin-left: 15px;
+    }
+    	.personWrap{
+            width: 30%;
+            float: left;
+            border: 1px solid #888585;
+            padding: 23px;
+            margin: 16px;
+            background:#f9f9f9cc;
+            position: relative;
+            text-align: center;
+            box-shadow: 3px 3px 3px #a09c9c;
+    	}
+        .norecordWrap{
+            width: 100%;clear: both;border: 1px solid #888585;
+            padding: 23px;
+            margin: 16px;
+            background: #cccc;
+            text-align: center;
+            box-shadow: 3px 3px 3px #a09c9c;
+        }
+        .delete{
+            position: absolute;
+            top: -17px;
+            right: -9px;
+            border-radius: 50%;
+            box-shadow: 5px 9px 2px #777;
+        }
+        .red{
+            color: red
+        }
+        .bold{
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+ </head>
+<body> 
+	<div id="root" ></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        	function Person(props){
+                return (
+                    <div className="personWrap">
+                          <div >
+                            <img src={props.avatar_url} width="100"/> <br/>
+                            Name  : <b> {props.name} </b><br />
+                            Id : <b> {props.age}  </b><br />
+                            Url :<a href={props.url}> Git Url </a><br />
+                             <button className='btn btn-primary delete' onClick={props.onClick}> X </button>
+                          </div>   
+
+
+                    </div> 
+                )
+            }
+            class App extends React.Component{ 
+              state ={
+                    persons :[ 
+                        {"url": "https://api.github.com/users/defunkt",name:"mojombo",age:10,avatar_url: "https://avatars0.githubusercontent.com/u/1?v=4",},
+                        {"url": "https://api.github.com/users/pjhyett",name:"defunkt",age:20,avatar_url: "https://avatars0.githubusercontent.com/u/2?v=4",},                        
+                        {"url": "https://api.github.com/users/wycats",name:"pjhyett",age:30,avatar_url: "https://avatars0.githubusercontent.com/u/3?v=4",},                        
+                        {"url": "https://api.github.com/users/ezmobius",name:"wycats",age:40,avatar_url: "https://avatars0.githubusercontent.com/u/4?v=4",},                        
+                        {"url": "https://api.github.com/users/ezmobius",name:"ezmobius",age:50, avatar_url: "https://avatars0.githubusercontent.com/u/5?v=4"},
+                    ],
+                    showperson:true
+                }
+                showhidepersonbtn = () => {
+                    const doesshow= this.state.showperson
+                    this.setState({
+                        showperson:!doesshow
+                    })
+                }
+                myreset  = () =>{
+                       this.setState({
+                          persons: [ 
+                        {"url": "https://api.github.com/users/defunkt",name:"mojombo",age:10,avatar_url: "https://avatars0.githubusercontent.com/u/1?v=4",},
+                        {"url": "https://api.github.com/users/pjhyett",name:"defunkt",age:20,avatar_url: "https://avatars0.githubusercontent.com/u/2?v=4",},                        
+                        {"url": "https://api.github.com/users/wycats",name:"pjhyett",age:30,avatar_url: "https://avatars0.githubusercontent.com/u/3?v=4",},                        
+                        {"url": "https://api.github.com/users/ezmobius",name:"wycats",age:40,avatar_url: "https://avatars0.githubusercontent.com/u/4?v=4",},                        
+                        {"url": "https://api.github.com/users/ezmobius",name:"ezmobius",age:50, avatar_url: "https://avatars0.githubusercontent.com/u/5?v=4"},
+                    ] 
+                        });
+                        
+                }
+                deleteperson = (personindex) => {
+                console.log("dlete")
+                 const persons = this.state.persons;
+                 persons.splice(personindex,1)
+                 this.setState({
+                    persons:persons
+                })
+            }
+                render(){
+                    const myclr ={
+                        background:"pink"
+                    }
+                    let persons =''
+                    if(this.state.showperson){
+                        persons = <div>
+                                {this.state.persons.map(
+                                        (person,index) => <Person 
+                                                            onClick={() => this.deleteperson(index)}
+                                                            key={index}
+                                                            name={person.name} 
+                                                            avatar_url={person.avatar_url} 
+                                                            url={person.url} 
+                                                            age={person.age}
+                                                        />                                
+                                       
+                                 )
+                                 }    
+
+                                 </div> 
+                                 myclr.background='blue'
+                    }else{
+                        <div className="norecordWrap" >  iam in hidden mode click agin<b> Toggle person button </b> to enable records </div>
+                    }
+                    const classes =[]
+                    if(this.state.showperson.length <=2){
+                        classes.push('red')
+                    }
+                    if(this.state.persons.length <3){
+                        classes.push('bold')
+                    }
+                    if(this.state.persons.length <4){
+                        classes.push('red')
+                    }
+                    return(
+                        <div  className="container"> 
+                            <br />
+                            <h1 > listof  Git users <mark> Active Items {this.state.persons.length}</mark> </h1>
+                            <div className ={classes.join(' ')}> Observe me </div>
+                           <span className='margin10'></span>{this.state.persons.length>0 ?  " " : <button className="btn btn-primary btn-sm"  onClick={this.myreset}> Reset </button>}  &nbsp;
+                            <button className="btn btn-success btn-sm" style={myclr} onClick={this.showhidepersonbtn}> Toggle person</button>
+                             
+                             { persons}
+
+                        </div>
+                    )
+                }
+            }
+        	ReactDOM.render(<App />,document.getElementById("root"))
+        </script>
+    </body>
+    </html>

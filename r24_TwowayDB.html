@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+    class App extends React.Component{
+    	state = {
+    persons: [
+      { name: "aa", age: 12 },
+      { name: "bb", age: 22 },
+      { name: "cc", age: 33 }
+    ],
+    stdname: "My Studen ",
+    iniprice:12
+  };
+  myBtn = newname => {
+    console.log("clickd e button");
+    this.setState({
+      persons: [
+        { name: newname, age: 120 },
+        { name: "bb1", age: 220 },
+        { name: "cc1", age: 330 }
+      ]
+    });
+  };
+  nameChange = e => {
+    console.log("input change");
+    this.setState({
+      persons: [
+        { name: e.target.value, age: 12 },
+        { name: "bbinput", age: 22 },
+        { name: "ccinput", age: 33 }
+      ]
+    });
+  };
+setdefBtn = () =>{
+		this.setState({
+  			iniprice:10
+  		})
+}
+resetBtn = () =>{
+		this.setState({
+  			iniprice:this.state.stdname
+  		})
+}
+  Myinput = (e) =>{
+  		this.setState({
+  			iniprice:e.target.value
+  		})
+	}
+  myresetBtn = () => {
+    console.log("reste");
+    this.setState({
+      persons: [
+        { name: "aa", age: 12 },
+        { name: "bb", age: 22 },
+        { name: "cc", age: 33 }
+      ]
+    });
+  };
+  render() {
+    let stdname1 = "My new student ";
+    return (
+      <div className="App">
+        <h1>Hello Person Details</h1>
+        <button onClick={this.myBtn.bind(this, "aa with new value")}>
+          {" "}
+          change{" "}
+        </button>
+        <button onClick={this.myresetBtn}>Reset</button>
+        <Person
+          changed={this.nameChange}
+          name={this.state.persons[0].name}
+          age={this.state.persons[0].age}
+          stdname={this.state.stdname}
+          mystd={stdname1}
+        />
+        <Person
+          name={this.state.persons[1].name}
+          age={this.state.persons[0].age}
+          stdname={this.state.stdname}
+          mystd={stdname1}
+          click={this.myBtn.bind(this, "aa with old value")}
+        >
+          <button>click me to change state </button>
+        </Person>
+
+        <Person
+          name={this.state.persons[2].name}
+          age={this.state.persons[0].age}
+          stdname={this.state.stdname}
+          mystd={stdname1}
+        />
+
+        <h3> Two way dabtabind</h3>
+        <input onChange={this.Myinput} value={this.state.iniprice} />
+        <button onClick={this.setdefBtn}> set Default vlaue 10</button>
+        <button onClick={this.resetBtn}> set resetBtn </button>
+
+        <p> Entered age <b>{this.state.iniprice}</b></p>
+
+      </div>
+    );
+  }
+}
+function Person(props) {
+  return (
+    <div>
+      <input onChange={props.changed} value={props.name} />
+      Name <b>{props.name}</b> age<b>{props.age}</b> Studnet name{" "}
+      <b>{props.stdname} </b>mystd <b> {props.mystd}</b>
+      <p onClick={props.click}>{props.children}</p>
+    </div>
+  );
+}	 
+    ReactDOM.render(<App />,document.getElementById('root'))
+</script>
+</body>
+</html>

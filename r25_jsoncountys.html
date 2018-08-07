@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+   
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    <style>
+        .wrapper{
+            width: 300px;
+            border: 1px solid red;
+            padding: 20px;
+            
+        }
+        .Chat{
+            width: 100%;
+            background: #ccffcc;
+            min-height: 300px;
+        } 
+        .Label{
+
+            width: 30%;float: left;
+        }
+        .Input{
+
+            width: 65%;float: left;
+        }
+    </style>
+    <div id="root"></div>
+    <script type="text/babel">
+   
+      class App extends React.Component{
+          constructor(){
+              super()
+              this.state = {  countries : 
+                                        [
+                                            {
+                                            "country": "Afghanistan",
+                                            "states": ["Badakhshan", "Badghis", "Baghlan", "Balkh", "Bamian", "Daykondi", "Farah", "Faryab", "Ghazni", "Ghowr", "Helmand", "Herat", "Jowzjan", "Kabul", "Kandahar", "Kapisa", "Khost", "Konar", "Kondoz", "Laghman", "Lowgar", "Nangarhar", "Nimruz", "Nurestan", "Oruzgan", "Paktia", "Paktika", "Panjshir", "Parvan", "Samangan", "Sar-e Pol", "Takhar", "Vardak", "Zabol"]
+                                            },
+                                            {
+                                            "country": "Albania",
+                                            "states": ["Berat", "Dibres", "Durres", "Elbasan", "Fier", "Gjirokastre", "Korce", "Kukes", "Lezhe", "Shkoder", "Tirane", "Vlore"]
+                                            },
+                                            {
+                                            "country": "Algeria",
+                                            "states": ["Adrar", "Ain Defla", "Ain Temouchent", "Alger", "Annaba", "Batna", "Bechar", "Bejaia", "Biskra", "Blida", "Bordj Bou Arreridj", "Bouira", "Boumerdes", "Chlef", "Constantine", "Djelfa", "El Bayadh", "El Oued", "El Tarf", "Ghardaia", "Guelma", "Illizi", "Jijel", "Khenchela", "Laghouat", "Muaskar", "Medea", "Mila", "Mostaganem", "M'Sila", "Naama", "Oran", "Ouargla", "Oum el Bouaghi", "Relizane", "Saida", "Setif", "Sidi Bel Abbes", "Skikda", "Souk Ahras", "Tamanghasset", "Tebessa", "Tiaret", "Tindouf", "Tipaza", "Tissemsilt", "Tizi Ouzou", "Tlemcen"]
+                                            },
+                                        ]
+                            }            
+                    this.mydrp =  this.mydrp.bind(this)
+            }
+            mydrp(e){
+                alert(e.target.value)
+            }
+          render(){
+            return (
+                <div className="wrapper">
+                    <div className="Chat">
+                            <select onChange={this.handleChange}>
+                                    
+                                {this.state.countries.map((myeachcountry,i) => <option key={i} value={myeachcountry.country}> 
+                                    {myeachcountry.country} 
+                                </option>) }  
+                                
+                            </select>   
+                        <div className="Label"> First name</div>
+                    </div>
+                </div>
+                )
+        }
+          }
+        ReactDOM.render(<App />,document.getElementById('root'))
+
+</script>
+</body>
+</html>

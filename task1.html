@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <style type="text/css">
+    	.outputwrap{
+    		width: 90%;margin:0 auto;border: 2px solid red;padding: 10px;margin: 5px;
+    	}
+    </style>
+ </head>
+<body>
+	<div id="root"></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        	
+        	function UserInput(props){
+        		const inputstyle ={
+        		border:'2px solid red'
+        	}
+        			return(
+        				<div>
+        					 UserInput  : <input  style={inputstyle} value={props.inival} onChange={props.inputchnage}/>
+        				</div>
+        			)
+        	}
+
+        	function UserOutput(props){
+        			return(
+        				<div className="outputwrap">  
+        					<p> User name <b>{props.username}</b></p>
+        					<p> fomr Innnoimnds</p> 
+        				</div>
+        			)
+        	}
+
+        	class App extends React.Component{  
+        		state  ={
+	        		username:"initial value"
+	        	}
+	        	UpdateUser = (e) => {
+	        		this.setState({
+	        			username:e.target.value
+	        		})
+
+	        	}
+        		render(){
+        			return(
+        				<div>
+        					<UserInput inputchnage={this.UpdateUser} inival={this.state.username} />
+							<UserOutput username={this.state.username}/>
+							<UserOutput username={this.state.username}/>
+							<UserOutput username="old mvlaue max"/>
+        				</div>
+        			)
+        		}
+        	}
+        	ReactDOM.render(<App />,document.getElementById("root"))
+        </script>
+    </body>
+    </html>

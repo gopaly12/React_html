@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ </head>
+        <style>
+            .navbar-nav {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+            position: relative;
+            z-index: 11111;
+            background: #fff;
+        }
+            label{
+                font-weight: bold;
+            }
+                .full{
+                    width: 100%;
+                    height: 50px;
+                    background: #ccc;
+                }
+                .left{
+                    width: 100%;
+                    min-height: 400px;
+                    height: calc( 100vh - 100px );
+                    background: #d5d5d6;
+                }
+                
+                .right{
+                    width: 100%;
+                    min-height: 400px;
+                    height: calc( 100vh - 100px );
+                    background: #8c8c8c;
+                }
+                
+                .top{
+                    width: 100%;
+                    min-height: 100px;
+                    background: #d5d5d6;
+                }
+                
+                .bottom{
+                    width: 100%;
+                    min-height: 300px; 
+                    background: olive;
+                }
+                .footer{
+                    position: fixed;
+                    bottom: 0;
+                    width: 100%; height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    background: #ccc;
+                    font-size: 20px;
+                    color:peru;
+                }
+                .eachperson{
+                    display: inline-block;
+                    width: 200px;
+                    margin: 6px;
+                    background: #ccc;
+                    min-height: 100px;
+                    border: 1px solid ;
+                    box-shadow: 3px 5px 10px red; 
+                }
+                .eachperson div{
+                    padding: 2px;
+                    text-align: center
+                }
+                .mynav li{
+                      display: inline-block;
+                      padding: 4px 10px;
+                      border:1px solid ;  
+                }
+        </style>
+<body>
+    <div id="root"></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        class App extends React.Component{
+            render(){
+                return ( 
+                    <div>
+                        <Template header={<Nav title="Innominds" navlist={['Home',"about","contact",'carriers']}/>}  left={<Sidenav />} right={<Main  topmain={<Top myleft={<Myleftintopsec />} myright={<Myrightintopsec />}/>}   bottommain={<Bottom />} />}  footer={<Footer />}/>
+                    </div>
+                )
+            }
+        }
+        function Template(props) {
+            return <div className="container">
+                    <div className="row">
+                    <div className="full"> {props.header} 
+                    </div>
+                    <div className="col-sm-4 left">
+ {props.left}
+                    </div>
+                    <div className="col-sm-8 right">
+                        {props.right} 
+                    </div>
+                    <div className="footer">
+                            {props.footer}
+                    </div>
+                    </div>
+            </div>
+        }
+        function Nav(props){
+            return (<div> 
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  <a className="navbar-brand" href="#">
+    {props.title}
+  </a>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+
+  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul className="navbar-nav mynav">
+      {
+          props.navlist.map(
+                                (navlink,id) =><li key={id} className="nav-item">{navlink}</li> 
+                            )
+      }
+       
+    </ul> 
+  </div>
+</nav>
+            </div>)
+        }
+        
+        function Sidenav(){
+            return (<div> 
+                <Signup title="Signup Form" />
+            </div>)
+        }
+        class Signup extends React.Component{
+            state = {
+                city:['india','usa','uk'],
+                gender:['male','female','undefinde'],
+                Hobbies:['cricket','Reading Books'],
+                username:'test'
+            }
+            myinputchnage = (e) => {
+                this.setState({username:e.target.value})
+            }
+            render(){
+                return <div> 
+                        <form>
+                        <h3>{this.props.title}</h3>
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Email address</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="User Name"  value={this.state.username} onChange={this.myinputchnage}/>
+                            <UsernameValidate enteredvalue={this.state.username} /> 
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Example select</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                    {this.state.city.map((city,id) => <option key={id}>{city}</option>)}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">select Gender</label>
+                             {this.state.gender.map((gen,i) => <span> <input type="radio" name="gender" />{gen}</span> )}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect2">select Hobbies</label>
+                             {this.state.Hobbies.map((hob,i) => <span> <input type="checkbox" name="gender" />{hob}</span> )}
+                        </div>
+                        <div class="form-group">
+                             <button> Save</button>
+                        </div>
+                        </form>
+                </div>
+            }
+
+        }
+        function UsernameValidate(props){
+            let error = ''
+            if(props.enteredvalue > 3 ){
+                error ="it is above 3 lettes"
+                return error
+            }
+            if(props.enteredvalue > 6 ){
+                error ="it is above 6 lettes"
+                return error
+            }
+            return <div> {error}</div>
+        }
+        function Top(props){
+            return (<div> form Top
+                <div className="row">
+                    <div className="col-sm-6 well  well-sm">{props.myleft}</div>
+                    <div className="col-sm-6 well  well-sm">{props.myright}</div>
+                </div>
+            </div>)
+        }
+        function Bottom(){
+            const personsdata = [
+                    {name:'Hari',age:12,loc:"hYd"},
+                    {name:'Rajesh',age:12,loc:"GOA"},
+                    {name:'John',age:12,loc:"Delhi"},
+                    {name:'TOmy',age:12,loc:"Delhi"},
+                    {name:'Cat',age:12,loc:"Delhi"},
+                    {name:'Ramesh',age:12,loc:"Delhi"},
+                    {name:'Ramesh',age:12,loc:"Delhi"},
+                    {name:'Ramesh',age:12,loc:"Delhi"},
+                ]
+            
+            return (<div>
+                 <h1>Student LIst</h1>
+                <Persons personslist={personsdata}/>
+            </div>)
+        }
+        function Persons(props){
+            return (
+                <div> {
+                            props.personslist.map(
+                                                     (p,id) => 
+                                                            <Person key={id}     name={p.name}   age={p.age}   location={p.loc} />
+                                                )
+                    }
+                </div>
+            )
+        }
+        function Person(props){
+            return (
+                <div className="eachperson">
+                        <div>Name: <b>{props.name}</b></div>
+                        <div>Age: <b>{props.age}</b></div>
+                        <div>Location: <b>{props.location}</b></div>
+                </div>
+            )
+        }
+        function Myleftintopsec(){
+            return (<div> form Myleftintopsec</div>)
+        }
+        
+        function Myrightintopsec(){
+            return (<div> form Myrightintopsec</div>)
+        }
+        
+        function Footer(){
+            return (<div> &copy; righs reserved 2018 @MyReactTask </div>)
+        }
+        function Main(props){
+            return (<div>
+                        
+                        <div className='top'>
+                                {props.topmain}
+                        </div>
+                        <div className='bottom'>
+                                {props.bottommain}
+                        </div>
+            </div>)
+        }
+
+            ReactDOM.render(<App />,document.getElementById('root'))
+        </script>
+</body>
+
+        </html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+   
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4/css/tachyons.min.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+
+ </head>
+<body>
+
+		  <script src="https://unpkg.com/@material-ui/core/umd/material-ui.production.min.js" crossorigin="anonymous"></script>
+
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+     
+    <div id="root"></div>
+    <script type="text/babel">
+  
+		const data = [
+		  { id: 1, name: ' foo', description: 'Foo' },
+		  { id: 2, name: 'bar', description: 'Bar' }
+		];
+
+
+class App extends React.Component{
+  state = { readOnly: false, selectedData: [1, 2] }
+  render() {
+    const { readOnly, selectedData = [] } = this.state;
+    return (
+      <div>
+        <TextField
+          inputProps={{
+            readOnly: Boolean(readOnly),
+            disabled: Boolean(readOnly)
+          }}
+          InputProps={{
+            disabled: Boolean(readOnly)
+          }}
+          required
+          fullWidth={true}
+          label="Name"
+          name="name"
+          margin="normal"
+          defaultValue={"some name"}
+        />
+
+        <TextField
+          readOnly={readOnly}
+          disabled={readOnly}
+          fullWidth
+          id="select-currency"
+          select
+          label="Select"
+          value={selectedData}
+          onChange={e => {
+            this.setState({ selectedData: e.target.value });
+          }}
+          SelectProps={{
+            multiple: true,
+            MenuProps: {
+              className: '',
+            },
+          }}
+          margin="normal"
+        >
+          {data.map(({ name, description, id }) => (
+            <MenuItem
+              key={id}
+              value={id}
+              style={{
+                fontWeight: selectedData.includes(id) ? '700' : '400',
+              }}
+            >
+              {name}
+            </MenuItem>
+          ))}
+        </TextField>
+
+       
+        
+        {readOnly ? <div style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          marginTop: '2em'
+        }}>
+            <Button color="accent" raised
+              onClick={e => this.setState({ readOnly: false }) }>Cancel</Button>
+
+            <Button color="primary" raised 
+              onClick={e => window.alert('submitted')}>Submit</Button>
+        </div> : <div style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          marginTop: '2em'
+        }}>
+            <Button color="primary" raised 
+              onClick={e => this.setState({ readOnly: true }) }>Review and Submit</Button>
+        </div>
+        }
+          
+       
+      </div>
+    )
+  }
+}
+
+
+ReactDOM.render(<App />, document.getElementById("root"));
+
+</script>
+</body>
+</html>

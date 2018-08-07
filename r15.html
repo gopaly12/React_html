@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+        const citys = ["Hyderabad",'Odia',"Banglore"]
+    	class Selectop extends React.Component{
+            constructor(){
+                super()
+                this.state = {city: "Hyderabad"};
+                this.mySelect = this.mySelect.bind(this)
+            }
+            mySelect(e){
+                var temp =[]
+                this.setState({
+                    city:e.target.value
+                })
+            }
+    		render(){
+                const citys =  ["Hyderabad",'Odia',"Banglore"]
+                return(
+                <div>
+                    <select multiple={true} onChange={this.mySelect} value={this.state.value}>
+                        {citys.map(city => <option key={city} value={city}>{city}</option> )  }
+                    </select>
+                    <div> select city <b>{this.state.city}</b></div>
+                </div>    
+                )
+            }
+	    }
+    	
+    	ReactDOM.render(<Selectop />,document.getElementById('root'))
+</script>
+</body>
+</html>

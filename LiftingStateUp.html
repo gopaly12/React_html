@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+     class CalculateTemp extends React.Component{
+     constructor(){
+	     super()
+	     this.state={temp : 0}
+	     this.tempchange  =this.tempchange.bind(this)
+	 }
+	 tempchange(e){
+	 	this.setState({
+	 		temp: e.target.value
+	 	})
+	}
+     	render(){
+	     	return (
+	     		<div>
+	     			<h3> calc the temp with child Comp</h3>
+	     			<input value={this.state.temp} onChange={this.tempchange} />
+	     			<Boilingstate chktemp ={this.state.temp}/>
+	     		</div>
+	     	)
+	 	}
+	 }
+	 function Boilingstate(props){
+	 var res = props.chktemp;
+	 var temp = ''
+	 if( res >= 100){
+	 	temp ="waper"
+	}else{
+		temp ="Liquide state"
+	}
+	 return(
+	 	<div> water  is {temp} state</div>
+	 )
+	}
+	ReactDOM.render(<CalculateTemp />,document.getElementById('root'))
+</script>
+</body>
+
+</html>

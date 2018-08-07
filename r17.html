@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <style type="text/css">
+
+        .FancyBorder {
+          padding: 10px 10px;
+          border: 10px solid;
+        }
+
+        .FancyBorder-blue {
+          border-color: blue;
+        }
+
+        .Dialog-title {
+          margin: 0;
+          color: red;
+          font-family: sans-serif;
+        }
+
+        .Dialog-message {
+            color: pink;
+          font-size: larger;
+        }
+        .FancyBorder-red{
+            border-color:  red
+        }
+    </style>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+    function FancyBorder(props){
+      const res ={
+        borderColor:props.color
+      }
+      return(
+        <div  className={'FancyBorder'} style={res}> 
+            {props.children} --<b> {props.color}</b>
+        </div>
+      )
+    }
+      class WelcomeDialog extends React.Component {
+        constructor(){
+          super()
+          this.state = {myclr:'red'}
+          this.inputClr = this.inputClr.bind(this)
+        }
+        inputClr(e){
+          this.setState({
+            myclr:e.target.value
+          })
+        }
+        render(){
+          return(
+            <FancyBorder color={this.state.myclr}>
+            <input  type="text"  onChange={this.inputClr}/>
+              <h1> Helllo javascript</h1>
+              <div> javascript is scripting Langualges</div>
+            </FancyBorder>
+          )
+        }
+        }
+        ReactDOM.render(<WelcomeDialog />,document.getElementById('root'))
+
+</script>
+</body>
+</html>

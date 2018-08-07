@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+   <style type="text/css">
+       .grey{background: #ccc;}
+       .blue{background: #fcfcfc;}
+       .showme{display: block;}
+       .hideme{display: none;}
+   </style>
+ </head>
+<body>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+ 
+
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+    <style>
+      
+    </style>
+    <div id="root"></div>
+    <script type="text/babel"> 
+function Userwrap(props){
+    const mytable ={ borderWidth:'2px',borderColor:'blue',borderStyle:'solid'
+    }
+    return <div className='table-responsive'>
+        <table style={mytable} border='1px' className="table table-bordered"  id="myTable"  >
+            <thead>
+                <tr>
+                  <th>id</th>
+                  <th>avatar_url</th>
+                  <th>html_url</th>
+                  <th>site_admin</th>
+                  <th>Options</th>
+                </tr>
+            </thead>
+
+          <tbody>
+                 {props.userlist.map((user,id) =><tr  key={id} className={user.site_admin ? 'grey' : 'blue' }>
+                       <td>{user.id}</td>
+                        <td><img src={user.avatar_url} width='50px' /></td>
+                        <td><a href={user.html_url} target="_blank">{user.html_url}</a></td>
+                        <td>{user.site_admin ? 'Admin' : 'Not Admin' }</td>
+                        <td>{user.site_admin ?<button className="btn btn-primary">Add Item</button > : <button  className="btn btn-success">Edit me</button >  }</td>
+                     </tr>    
+            )}
+             </tbody>
+          </table>
+    </div>
+}
+      function App(){
+        return (
+            <div className="container">
+                <div className="Chat">
+                </div>
+            </div>
+            )
+      }
+        ReactDOM.render(<App />,document.getElementById('root'))
+ $(document).ready( function () { $('#myTable').DataTable({
+ fixedColumns: true
+});} )
+</script>
+</body>
+</html>

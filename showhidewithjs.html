@@ -1,0 +1,89 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <style type="text/css">
+    	.personWrap{
+    		width: 30%;float: left;border: 2px solid red;padding: 10px;margin: 5px;
+            text-align: center;;
+    	}
+        .norecordWrap{
+            width: 100%;clear: both;border: 2px solid red;padding: 10px;margin: 5px;
+            text-align: center;;
+        }
+    </style>
+ </head>
+<body>
+	<div id="root"></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        	function Person(props){
+                return (
+                    <div className="personWrap">
+                          <div>
+                             name is <b> {props.name} </b><br />
+                             age is <b> {props.age}  </b>
+                          </div>   
+
+
+                    </div> 
+                )
+            }
+            class App extends React.Component{
+                state ={
+                    persons :[
+                        {name:'aa',age:1},
+                        {name:'vbb',age:1},                        
+                        {name:'cc',age:1},
+                        {name:'dd',age:1},
+                    ],
+                    showperson:false
+                }
+                showhidepersonbtn = () => {
+                    const doesshow= this.state.showperson
+                    this.setState({
+                        showperson:!doesshow
+                    })
+                }
+                render(){
+	                let personstatus = 'empty'
+	                if(this.state.showperson){
+	                	personstatus = (
+	                			<div>
+	                				<Person 
+	                                name={this.state.persons[0].name} 
+	                                age={this.state.persons[0].age}/>                                
+	                                <Person 
+	                                name={this.state.persons[1].name} 
+	                                age={this.state.persons[1].age}/> 
+	                                <Person 
+	                                name={this.state.persons[2].name} 
+	                                age={this.state.persons[2].age}/> 
+	                                <Person 
+	                                name={this.state.persons[3].name} 
+	                                age={this.state.persons[3].age}/> 
+							     </div>  
+							     	)
+	            	}
+                    return(
+                        <div> 
+                            <button onClick={this.showhidepersonbtn}> Toggle person</button>
+                             <div className="norecordWrap" >
+                             	{ personstatus  }   
+                             </div>	
+                        </div>
+                    )
+                }
+            }
+        	ReactDOM.render(<App />,document.getElementById("root"))
+        </script>
+    </body>
+    </html>

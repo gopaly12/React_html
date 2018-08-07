@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+        const stds =[
+            {name:'Std_ap',state:'ap'},
+            {name:'Std_bp',state:'bp'},
+            {name:'Std_cp',state:'cp'}
+        ]
+        const mynumbers = [1,2,3,4,5,6,7,8,9,10]
+    	class Stddata extends React.Component{
+            render(){
+                return(
+                    <div>
+                         <h1> Studnet Details</h1>
+                         <Newlist /><TodoList /><App2 />
+                         {stds.map((std,i) => <Std mystd={std} />)}
+                         {mynumbers.map((num,i) => <Numbers id={i} mynum = {num} />)}
+                     </div>    
+                )
+            }
+        }
+        function Numbers(props){
+let even;
+                if( props.mynum % 2 != 0){
+                    even = <div> Numbers list {props.mynum}</div>
+                }
+                  return <div>{even}</div>;
+
+        }
+        function Std(props){
+            return(
+                <div>
+                    <div> Name {props.mystd.name} State is {props.mystd.state} </div>
+                </div>
+            )
+        }
+        ReactDOM.render(<Stddata />,document.getElementById('root'))
+
+        
+        function Newlist(){
+            return(
+                <Repeatme mycount={10}>
+                         {(index) => <div key={index}>This is item {index} in the list</div>}
+                </Repeatme>
+            )
+        }
+
+        function Repeatme(props){
+        let list=[]
+            for(let i=0;i<=props.mycount;i++){
+                list.push(props.children(i))
+            }
+        return (
+            <div> {list}</div>
+        )
+    }
+    function Item(props) {
+  return <li>{props.message}</li>;
+}
+
+function TodoList() {
+  const todos = ['finish doc', 'submit pr', 'nag dan to review'];
+  return (
+    <ul>
+      {todos.map((message) => <Item key={message} message={message} />)}
+    </ul>
+  );
+} 
+
+function App2() {
+  const std = {name:'bb',age:2}
+  return <Greeting {...std} />;
+}
+function Greeting(props){
+    return <li>Name__ {props.name}  age__ {props.age}</li> 
+}
+</script>
+
+</body>
+
+</html>

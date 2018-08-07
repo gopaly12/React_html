@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+    <style type="text/css">
+    	.outputwrap{
+    		width: 90%;margin:0 auto;border: 2px solid red;padding: 10px;margin: 5px;
+    	}
+
+		.mychar{
+			width:25px;height: 25px;border:1px solid red;padding: 2px;margin:4px;display: inline-block;; line-height: 20px;text-align: center
+
+		}
+    </style>
+ </head>
+<body>
+	<div id="root"></div>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+        <script type="text/babel">
+        	
+			class App extends React.Component{
+				 state = {
+						inputval : ''
+					}
+				 
+				inputchange = (e) => {
+						console.log(e.target.value)
+						this.setState({
+							inputval: e.target.value 
+							})
+				}
+				deletechar = (index) => {
+					const text = this.state.inputval.split('')
+					text.splice(index,1)
+					const updatetext = text.join(''); 
+					this.setState({inputval:''})
+				} 
+				render(){
+					var res = [1,2,2,3,34,4,22]
+					const charlist =this.state.inputval.split('').map((ch,index) => 
+																{
+															return	<Char 
+																		key={index}
+																		Charatrer={ch} 
+																		clicked={()=>this.deletechar(index)}
+																	 />
+																}
+															)
+					return (
+						<div> 
+							<input  onChange={this.inputchange}/>
+							<p> Entered vlaue <b>{this.state.inputval}</b></p>	
+							<Validation inputlength= {this.state.inputval.length} />
+							<br/>
+							{charlist}	
+						</div>
+					)
+				}
+			}
+			function  Validation(props) {
+				let validationMsg =''
+				if(props.inputlength < 5 ){
+					validationMsg ='Length is too short'
+				}else{
+					validationMsg ='Length is too Long '
+
+				}
+				return (
+					<div> from validation <br />{props.inputlength}<br/>
+						Error {validationMsg}
+						<br />
+						{props.inputlength <5 ? <p> short</p> : <p> big test</p>}
+						</div>
+				)
+			}
+			function Char(props){
+				return <div className="mychar"  onClick={props.clicked}>
+						{props.Charatrer == '' ? '' : props.Charatrer}		
+					</div>
+			}
+        	ReactDOM.render(<App />,document.getElementById("root"))
+        </script>
+    </body>
+    </html>

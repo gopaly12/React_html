@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+   
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    <style>
+        .wrapper{
+            width: 300px;
+            border: 1px solid red;
+            padding: 20px;
+            
+        }
+        .Chat{
+            width: 100%;
+            background: #ccffcc;
+            min-height: 300px;
+        } 
+        .Label{
+
+            width: 30%;float: left;
+        }
+        .Input{
+
+            width: 65%;float: left;
+        }
+    </style>
+    <div id="root"></div>
+    <script type="text/babel">
+   
+class Select extends React.Component {
+  state = {
+    "countries": [
+    {
+      "country": "India",
+      "states": ["Andaman and Nicobar Islands", "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Pondicherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Tripura", "Uttaranchal", "Uttar Pradesh", "West Bengal"]
+    },
+    {
+      "country": "Indonesia",
+      "states": ["Aceh", "Bali", "Banten", "Bengkulu", "Gorontalo", "Irian Jaya Barat", "Jakarta Raya", "Jambi", "Jawa Barat", "Jawa Tengah", "Jawa Timur", "Kalimantan Barat", "Kalimantan Selatan", "Kalimantan Tengah", "Kalimantan Timur", "Kepulauan Bangka Belitung", "Kepulauan Riau", "Lampung", "Maluku", "Maluku Utara", "Nusa Tenggara Barat", "Nusa Tenggara Timur", "Papua", "Riau", "Sulawesi Barat", "Sulawesi Selatan", "Sulawesi Tengah", "Sulawesi Tenggara", "Sulawesi Utara", "Sumatera Barat", "Sumatera Selatan", "Sumatera Utara", "Yogyakarta"]
+    },
+    {
+      "country": "Iran",
+      "states": ["Ardabil", "Azarbayjan-e Gharbi", "Azarbayjan-e Sharqi", "Bushehr", "Chahar Mahall va Bakhtiari", "Esfahan", "Fars", "Gilan", "Golestan", "Hamadan", "Hormozgan", "Ilam", "Kerman", "Kermanshah", "Khorasan-e Janubi", "Khorasan-e Razavi", "Khorasan-e Shemali", "Khuzestan", "Kohgiluyeh va Buyer Ahmad", "Kordestan", "Lorestan", "Markazi", "Mazandaran", "Qazvin", "Qom", "Semnan", "Sistan va Baluchestan", "Tehran", "Yazd", "Zanjan"]
+    },
+    {
+      "country": "Iraq",
+      "states": ["Al Anbar", "Al Basrah", "Al Muthanna", "Al Qadisiyah", "An Najaf", "Arbil", "As Sulaymaniyah", "At Ta'mim", "Babil", "Baghdad", "Dahuk", "Dhi Qar", "Diyala", "Karbala'", "Maysan", "Ninawa", "Salah ad Din", "Wasit"]
+    },
+  ],
+
+  stateStatus:false
+  };
+
+  handleChange = (event) => {
+      
+    const mycounty =''
+    this.setState({ value: event.target.value,stateStatus:true });
+    localStorage.setItem('mycounty', event.target.value);  
+    console.log(localStorage.getItem('mycounty'))
+  };
+
+  render() {
+       
+    const { countries, value } = this.state;
+
+    return (
+      <div>
+        <Countylist showstate={this.state.stateStatus} countries={this.state.countries} onChange={this.handleChange}  states={this.state.states}   mycountyprp = {localStorage.getItem('mycounty')}/>
+      
+        <h1>Favorite letter: {value}</h1>
+      </div>
+    );
+  }
+}
+function Statelist(props){  
+    let mycity = props.mystateprp; 
+    let temp = ''
+    if(mycity === localStorage.getItem('mycounty')){
+            temp =  <div  > 
+                {props.countries.map((item,sid) => (
+                    
+                        <select key={sid}>
+                            {item.states.map((mystate,id) => <option key={id} value={mystate}>{mystate}</option>)}
+                        </select>
+                        )
+                    )    
+                }
+            </div>
+    }else {
+        temp=''
+    }
+    return (
+        <div>
+       {temp}
+       </div>
+    )
+}
+function Countylist (props){
+    return (
+        <div>
+            <select onChange={props.onChange} >
+                {props.countries.map(item => (
+                        <option key={item.country} value={item.country}>
+                            {item.country}
+                        </option>
+                        )
+                    )    
+                }
+            </select>
+            {props.showstate ? <Statelist countries={props.countries}  mystateprp={props.mycountyprp} statechange={props.onChange}/> : '' }
+            
+        </div>
+    )
+}
+ReactDOM.render(<Select />,document.getElementById('root'))
+</script>
+</body>
+</html>

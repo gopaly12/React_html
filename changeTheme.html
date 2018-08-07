@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+  </head>
+  <body>
+
+     <div id="root"></div>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script type="text/babel">
+
+      function ThemedButton(props) {
+      return <Button theme={props.theme} />;
+    }
+      function Toolbar(props) {
+      // The Toolbar component must take an extra "theme" prop
+      // and pass it to the ThemedButton. This can become painful
+      // if every single button in the app needs to know the theme
+      // because it would have to be passed through all components.
+      return (
+        <div>
+          <ThemedButton theme={props.theme} />
+        </div>
+      );
+    }
+    class Button extends React.Component {
+  componentDidMount() {
+    // ThemeContext value is this.props.theme
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Previous ThemeContext value is prevProps.theme
+    // New ThemeContext value is this.props.theme
+  }
+
+  render() {
+    const {theme, children} = this.props;
+    return (
+      <button className={theme || 'light'}>
+        {children}
+      </button>
+    );
+  }
+}
+
+export default props => (
+  <ThemeContext.Consumer>
+    {theme => <Button {...props} theme={theme} />}
+  </ThemeContext.Consumer>
+);
+
+      class App extends React.Component {
+      render() {
+        return <Toolbar theme="dark" />;
+      }
+    }
+      ReactDOM.render(<App />,document.getElementById("root"))
+</script>
+</body>
+</html>

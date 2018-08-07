@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise</title>
+ </head>
+<body>
+        <script src="https://unpkg.com/react@16.2.0/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16.2.0/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.2/prop-types.js"></script>
+    
+    <div id="root"></div>
+    <script type="text/babel">
+    	class Checklist extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    citys : ["Hyderabad",'Odia',"Banglore","Goa","Chennai"],selectedcity:''
+                };
+                this.mySelect = this.mySelect.bind(this)
+                this.inputChk = this.inputChk.bind(this)
+            }
+            inputChk(e){
+            alert(e.target.value)
+            var citylist = []
+                citylist.push("e.target.value"+e.target.value)
+                console.log(citylist)
+                this.setState({
+                    selectedcity:e.target.value
+                })
+            }
+            mySelect(e){
+                var temp =[]
+                this.setState({
+                    city:e.target.value
+                })
+            }
+    		render(){
+                const myStyle ={color:'red'}  
+                return(
+                <div>
+                        {this.state.citys.map(city => <span key={city}>
+                                                <input key={city} type="checkbox" onChange={this.inputChk} value={city} /> 
+                                                {city}
+                                            </span>        
+                            )  }
+                            <p> </p>
+                            <Hobies />
+                </div>    
+                )
+            }
+	    }
+        class Hobies extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                                hobies : ['cricket','chess','readingbooks'],
+
+                                hob:''
+                            }
+                            this.radioChange = this.radioChange.bind(this)
+            }
+            radioChange(e){
+                this.setState({
+
+                    hob:e.target.value
+            })
+            }
+            render(){
+                const myStyle ={color:'red'}
+                return (<div> 
+                            Hobbies list <span style={myStyle}>{this.state.selectedcity}</span><br/>
+                            {
+                                this.state.hobies.map(
+                                    (hob) => <span key={hob}><input type="radio" value={hob} name='hobies' onChange={this.radioChange}/> {hob}
+                                    </span>
+                                )
+                            } <hr />
+                            <h1> seleced Hobies <span style={myStyle}> {this.state.hob} </span> </h1>
+                        </div>)
+                } 
+            }
+    ReactDOM.render(<Checklist />,document.getElementById('root'))
+</script>
+</body>
+</html>
